@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 from flask_app.config.mysqlconnection import connectToMySQL
 
-db = 'project_db'
+db = 'game_library_db'
 
 class User:
     def __init__(self, data):
@@ -63,3 +63,11 @@ class User:
         if len(results) < 1:
             return False
         return (cls(results[0]))
+
+    @classmethod
+    def get_one(cls, data):
+        query = """
+                SELECT * FROM users WHERE id = %(id)s
+                """
+        results = connectToMySQL(db).query_db(query, data)
+        return cls(results[0])
