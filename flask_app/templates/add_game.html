@@ -22,10 +22,27 @@
                     <h1>Find Games</h1>
                     <div class="search">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="search" class="searchbar" placeholder="Search games">
-                        <button type="button" class="search_button">Search</button>
+                        <input type="text" name="name" class="searchbar" placeholder="Search games">
+                        <button type="submit" class="search_button">Search</button>
                     </div>
                 </form>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <li><img src="{{session.background_img_1}}" alt="RL Background Image"></li>
+                    <li><h3>{{session.name_1}}</h3></li>
+                    <!-- <li>Platforms: {{session.platform_pc_1}}, {{session.platform_xbox_1}}, {{session.platform_playstation_1}}, {{session.platform_nintendo_1}}</li> -->
+                </div>
+                <div class="col">
+                    <li><img src="{{session.background_img_2}}" alt="RL Background Image"></li>
+                    <li><h3>{{session.name_2}}</h3></li>
+                    <!-- <li>Platforms: {{session.platform_pc_2}}, {{session.platform_xbox_2}}, {{session.platform_playstation_2}}, {{session.platform_nintendo_2}}</li> -->
+                </div>
+                <div class="col">
+                    <li><img src="{{session.background_img_3}}" alt="RL Background Image"></li>
+                    <li><h3>{{session.name_3}}</h3></li>
+                    <!-- <li>Platforms: {{session.platform_pc_1}}, {{session.platform_xbox_1}}, {{session.platform_playstation_1}}, {{session.platform_nintendo_1}}</li> -->
+                </div>
             </div>
         </div>
     </div>

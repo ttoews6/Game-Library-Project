@@ -3,6 +3,7 @@ from flask import render_template, redirect, session, request, flash
 from flask_app.models.models_user import User
 from flask_app.models.models_game import Game
 import requests
+from pprint import pprint
 
 @app.route('/dashboard')
 def dashboard():
@@ -22,5 +23,29 @@ def add_game():
 
 @app.route('/get_games', methods=['POST'])
 def get_games():
-    response = requests.get("https://api.rawg.io/api/gameskey=0ec2c3dffd054b1c9f7cfff9bb16a902")
-    print(response.json())
+    game = request.form['name']
+    url = (f"https://rawg-video-games-database.p.rapidapi.com/games?search={game}&page=1&page_size=6&key=0ec2c3dffd054b1c9f7cfff9bb16a902")
+
+    headers = {
+        "X-RapidAPI-Key": "29075e97e0msh67b1180c7e4a6d2p143b20jsnd056098ddd8c",
+        "X-RapidAPI-Host": "rawg-video-games-database.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers)
+
+    # First Game Result
+    session['name_1'] = response.json()['results'][0]['name']
+    session['platform_pc_1'] = response.json()['results'][0]['platforms'][0]['platform']['name']
+    session['platform_xbox_1'] = response.json()['results'][0]['platforms'][1]['platform']['name']
+    session['platform_playstation_1'] = response.json()['results'][0]['platforms'][2]['platform']['name']
+    session['platform_nintendo_1'] = response.json()['results'][0]['platforms'][3]['platform']['name']
+    session['background_img_1'] = response.json()['results'][0]['background_image']
+
+    # Second Game Result
+    session['name_2'] = response.json()['results'][1]['name']
+    session['background_img_2'] = response.json()['results'][1]['background_image']
+
+    # Third Game Result
+    session['name_3'] = response.json()['results'][2]['name']
+    session['background_img_3'] = response.json()['results'][2]['background_image']
+    return redirect('/add_game')
