@@ -24,11 +24,11 @@ def add_game():
 @app.route('/get_games', methods=['POST'])
 def get_games():
     game = request.form['name']
-    url = (f"https://rawg-video-games-database.p.rapidapi.com/games?search={game}&page=1&page_size=6&key=0ec2c3dffd054b1c9f7cfff9bb16a902")
+    url = (f"https://rawg-video-games-database.p.rapidapi.com/games?search={game}&page=1&page_size=6&key=")
 
     headers = {
-        "X-RapidAPI-Key": "29075e97e0msh67b1180c7e4a6d2p143b20jsnd056098ddd8c",
-        "X-RapidAPI-Host": "rawg-video-games-database.p.rapidapi.com"
+        "X-RapidAPI-Key": "",
+        "X-RapidAPI-Host": ""
     }
 
     response = requests.request("GET", url, headers=headers)
