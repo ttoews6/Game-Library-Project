@@ -33,19 +33,11 @@ def get_games():
 
     response = requests.request("GET", url, headers=headers)
 
-    # First Game Result
-    session['name_1'] = response.json()['results'][0]['name']
-    session['platform_pc_1'] = response.json()['results'][0]['platforms'][0]['platform']['name']
-    session['platform_xbox_1'] = response.json()['results'][0]['platforms'][1]['platform']['name']
-    session['platform_playstation_1'] = response.json()['results'][0]['platforms'][2]['platform']['name']
-    session['platform_nintendo_1'] = response.json()['results'][0]['platforms'][3]['platform']['name']
-    session['background_img_1'] = response.json()['results'][0]['background_image']
-
-    # Second Game Result
-    session['name_2'] = response.json()['results'][1]['name']
-    session['background_img_2'] = response.json()['results'][1]['background_image']
-
-    # Third Game Result
-    session['name_3'] = response.json()['results'][2]['name']
-    session['background_img_3'] = response.json()['results'][2]['background_image']
+    results = response.json()['results']
+    list = []
+    for result in results:
+        display = [result['name'], result['background_image']]
+        list.append(display)
+    session['list'] = list
+    
     return redirect('/add_game')
