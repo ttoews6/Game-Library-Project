@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 from flask_app.config.mysqlconnection import connectToMySQL
 
-db = 'game_library_db'
+db = 'show_watchlist_db'
 
 class User:
     def __init__(self, data):
@@ -53,7 +53,24 @@ class User:
             flash('Passwords do not match', 'register')
             is_valid = False
         return is_valid
+    
+    @staticmethod
+    def email_validator(data):
+        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+        is_valid = True
+        if not EMAIL_REGEX.match(data['email']):
+            flash('Invalid Email Address', 'update')
+            is_valid = False
+        query = """
+                SELECT * FROM users WHERE email = %(email)s
+                """
+        results = connectToMySQL(db).query_db(query, data)
+        if len(results) != 0:
+            flash('This email is already being used', 'update')
+            is_valid = False
+        return is_valid
 
+    
     @classmethod
     def get_by_email(cls, data):
         query = """
@@ -71,3 +88,8 @@ class User:
                 """
         results = connectToMySQL(db).query_db(query, data)
         return cls(results[0])
+
+    @classmethod
+    def update_email(cls, data, user_id):
+        query = f"UPDATE users SET email = %(email)s WHERE id = {user_id}"
+        return connectToMySQL(db).query_db(query, data)

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/fontawesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-add_show.css') }}">
+    <script src="https://kit.fontawesome.com/6ab0e5281f.js" crossorigin="anonymous"></script>
+    <script src="{{  url_for('static', filename='main.js')}}" async></script>
+    <title>Show Watchlist</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="links">
+            <a href="/dashboard"><div class="btn btn-primary">Dashboard</div></a>
+            <div class="dropdown">
+                <button class="btn btn-primary"><i class="fa-regular fa-user"></i></button>
+                <div class="dropdown-content">
+                    <a href="/profile/{{user.id}}">Profile</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="input-group">
+                <form action="/find_shows" method="post">
+                    <h1>Find Shows</h1>
+                    <div class="search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" name="name" class="searchbar" placeholder="Search shows...">
+                        <button type="submit" class="search_button">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                {% for i in session.shows %}
+                <div class="col-3">
+                    {% if i[1] == None %}
+                    <img src="/placeholder.jpg" alt="Placeholder">
+                    {% else %}
+                    <img src="{{i[1]['medium']}}" alt="Show Poster">
+                    {% endif %}
+                    <form action="/add_to_watchlist" method="post">
+                        <div class="form-outline">
+                            <textarea name="name" id="name" cols="20" rows="3" class="form-control">{{i[0]}}</textarea>
+                        </div>
+                        <input type="text" name="url" value="{{i[3]}}">
+                        <button class="btn btn-primary btn-lg btn-block">Add to Watchlist</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
