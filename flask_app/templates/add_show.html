@@ -38,7 +38,7 @@
                 {% for i in session.shows %}
                 <div class="col-3">
                     {% if i[1] == None %}
-                    <img src="/placeholder.jpg" alt="Placeholder">
+                    <img src="{{ url_for('static', filename='placeholder.jpg') }}" alt="Placeholder" class="placeholder">
                     {% else %}
                     <img src="{{i[1]['medium']}}" alt="Show Poster">
                     {% endif %}
@@ -46,7 +46,9 @@
                         <div class="form-outline">
                             <textarea name="name" id="name" cols="20" rows="3" class="form-control">{{i[0]}}</textarea>
                         </div>
-                        <input type="text" name="url" value="{{i[3]}}">
+                        <input type="text" name="image" value="{{i[1]['medium']}}">
+                        <input type="text" name="summary" value="{{i[2]}}">
+                        <input type="text" name="genres" value="{{i[3][0]}}, {{i[3][1]}}">
                         <button class="btn btn-primary btn-lg btn-block">Add to Watchlist</button>
                     </form>
                 </div>

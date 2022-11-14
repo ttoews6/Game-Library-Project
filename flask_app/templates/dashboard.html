@@ -5,28 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/fontawesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-dashboard.css') }}">
-    <title>Game Library Dashboard</title>
+    <script src="https://kit.fontawesome.com/6ab0e5281f.js" crossorigin="anonymous"></script>
+    <title>Show Watchlist Dashboard</title>
 </head>
 <body>
     <div class="container-fluid">
         <div class="header d-flex justify-content-between align-items-center p-2">
             <h1>Welcome, {{user.first_name}}</h1>
-            <a href="/logout"><div class="btn btn-primary">Logout</div></a>
+            <div class="dropdown">
+                <button class="btn btn-primary"><i class="fa-regular fa-user"></i></button>
+                <div class="dropdown-content">
+                    <a href="/profile/{{user.id}}">Profile</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+            
         </div>
         <div class="container">
-            <h2>My Games</h2>
+            <h1>My Watchlist</h1>
             <div class="table-container">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Game Title</th>
-                            <th>Game Size</th>
+                            <th>Show Name</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        {% for show in shows %}
+                        {% if user.id == show.users.id %}
+                        <tr>
+                            <td><h3>{{show.name}}</h3></td>
+                            <td><a href="/show_details/{{show.id}}">Show Details</a> | <a href="/delete_show/{{show.id}}">Watched</a></td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
                 </table>
-                <a href="/add_game"><div class="btn btn-primary">+Add Game</div></a>
+                <a href="/add_show"><div class="btn btn-primary">+Add Show</div></a>
             </div>
         </div>
     </div>
