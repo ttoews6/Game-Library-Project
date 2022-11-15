@@ -24,7 +24,10 @@
             
         </div>
         <div class="container">
-            <h1>My Watchlist</h1>
+            <div class="table-navbar d-flex justify-content-between align-items-center">
+                <h1>My Watchlist</h1>
+                <a href="/add_show"><div class="btn btn-primary add-show">+Add Show</div></a>
+            </div>
             <div class="table-container">
                 <table class="table table-bordered">
                     <thead>
@@ -37,14 +40,18 @@
                         {% for show in shows %}
                         {% if user.id == show.users.id %}
                         <tr>
-                            <td><h3>{{show.name}}</h3></td>
-                            <td><a href="/show_details/{{show.id}}">Show Details</a> | <a href="/delete_show/{{show.id}}">Watched</a></td>
+                            <td class="shows d-flex align-items-center">
+                                <img src="{{show.image}}" alt="Show Poster">
+                                <h3>{{show.name}}</h3>
+                            </td>
+                            <td class="actions">
+                                <a href="/show_details/{{show.id}}">Show Details</a> | <a href="/delete_show/{{show.id}}">Watched</a>
+                            </td>
                         </tr>
                         {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
-                <a href="/add_show"><div class="btn btn-primary">+Add Show</div></a>
             </div>
         </div>
     </div>

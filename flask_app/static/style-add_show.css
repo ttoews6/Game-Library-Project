@@ -124,9 +124,9 @@ h1 {
     color: black;
 }
 
-.col-3 form input {
+/* .col-3 form input {
     display: none;
-}
+} */
 
 .col-3 textarea {
     border-style: none;
