@@ -4,6 +4,7 @@ from flask_app.models.models_user import User
 from flask_app.models.models_show import Show
 import requests
 import re
+import json
 from pprint import pprint
 
 @app.route('/dashboard')
@@ -38,7 +39,11 @@ def find_shows():
     
     shows = []
     for result in results:
-        show = [result['show']['name'], result['show']['image'], result['show']['summary'], result['show']['genres']]
+        summary = result['show']['summary']
+        if summary != None:
+            clean = re.compile('<.*?>')
+            summary = re.sub(clean, '', summary)
+        show = [result['show']['name'], result['show']['image'], summary, result['show']['genres']]
         shows.append(show)
     
     session['shows'] = shows
